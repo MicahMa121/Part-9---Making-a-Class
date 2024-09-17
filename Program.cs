@@ -15,11 +15,18 @@ namespace Part_9___Making_a_Class
 
             while (true)
             {
-                Console.WriteLine("Please enter a command, enter \"help\" to check the list of commands.");
+                Console.WriteLine("Please enter a command");
                 string input = Console.ReadLine().ToLower();
                 if (input == "help" )
                 {
-                    
+                    Console.WriteLine("Available Commands:\nupdate - show the updated list of student" +
+                        "\ndetail - check detail of a specific student" +
+                        "\nadd - add an student to the list" +
+                        "\nremove - remove an existing student from the list" +
+                        "\nsearch - search for existing students " +
+                        "\nedit - change information of a specific student in the list" +
+                        "\nsort - sort the list in alphabetical order of the last name" +
+                        "\nquit - exit the program");
                 }
                 else if (input == "update")
                 {
@@ -106,6 +113,70 @@ namespace Part_9___Making_a_Class
                 {
                     Console.WriteLine("Please enter the name of the student you want to edit.");
                     string student_edit = Console.ReadLine();
+                    Student student = null;
+
+                    bool found = false;
+                    for (int i = 0; i < students.Count; i++)
+                    {
+                        if (student_edit.ToLower() == students[i].ToString().ToLower())
+                        {
+                            StudentDetail(students[i]);
+                            student = students[i];
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        Console.WriteLine(student_edit + " is not found.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("What do you want to change about this student's info? (FirstName, LastName, StudentNumber, Email)");
+                        string edit = Console.ReadLine().ToLower();
+                        if (edit == "firstname")
+                        {
+                            Console.WriteLine("The current first name is " + student.FirstName + ", please enter the updated first name");
+                            student.FirstName = Console.ReadLine();
+                            StudentDetail(student);
+                        }
+                        else if (edit == "lastname")
+                        {
+                            Console.WriteLine("The current last name is " + student.LastName + ", please enter the updated last name");
+                            student.LastName = Console.ReadLine();
+                            StudentDetail(student);
+                        }
+                        else if (edit == "studentnumber")
+                        {
+                            Console.WriteLine("The current student number is " + student.StudentNumber + ".");
+                            student.GenerateNumber();
+                            Console.WriteLine("The new student number is " + student.StudentNumber + ".");
+                        }
+                        else if (edit == "email")
+                        {
+                            Console.WriteLine("The current student Email is " + student.Email + ".");
+                            student.GenerateEmail();
+                            Console.WriteLine("The new student Email is " + student.Email + ".");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Input Error");
+                        }
+                    }
+                }
+                else if (input== "sort")
+                {
+                    students.Sort();
+                    Console.WriteLine("List Sorted.");
+                }
+                else if (input == "quit")
+                {
+                    Console.WriteLine("Thank you for using this program!");
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("Input Error\nEnter \'help\' to see the list of commands");
                 }
             }
 
